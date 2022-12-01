@@ -15,7 +15,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: src/
-      Handler: getdatabasestation.lambda_handler
+      Handler: lambda1.lambda_handler
       Runtime: python3.9
       Events:
         GetStation:
@@ -23,6 +23,26 @@ Resources:
           Properties:
             Path: /koodit
             Method: get
+      #Policies:
+        #-DynamoDBCrudPolicy
+          #TableName: !Ref ActivitiesTable
+  
+  UpdateDBFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        SaveToDB:
+          Type: Api
+          Properties:
+            Path: /koodit/
+            Method: put
+      #Policies:
+      #-DynamoDBCrudPolicy
+        #TableName: !Ref ActivitiesTable
+
     Layers:
       - !reference libs
 
@@ -36,4 +56,11 @@ Resources:
       CompatibleRuntimes:
         - python3.9      
 
+Outputs:
+  ActivitiesTable:
+    Description: "week8group2db1"
+    Value: !Ref ActivitiesTable
+  ActivitiesTableArn:
+    Description: "week8group2db1 ARN"
+    Value: !GetAtt ActivitiesTable.Arn
 
