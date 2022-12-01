@@ -3,8 +3,6 @@ import json
 import logging
 import boto3
 
-
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -47,7 +45,6 @@ def lambda_handler(event, context):
     value_saa = str(data2_dict['current']['temp_c'])
    
     # Rajapinnoista haetut Tampereen juna-aseman aikataulutiedot ja säätiedot lisätään DynamoDB:hen
-
     table = dynamodb.Table('Information')
     data = table.put_item(
        Item={
