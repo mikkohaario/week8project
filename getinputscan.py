@@ -44,6 +44,7 @@ def lambda_handler(event, context):
     
     value_saa2 = str(data2_dict['location']['name'])
     value_saa = str(data2_dict['current']['temp_c'])
+    value_time = str(data2_dict['current']['last_updated'])
    
     # Rajapinnoista haetut Tampereen juna-aseman aikataulutiedot ja säätiedot lisätään DynamoDB:hen
     table = dynamodb.Table('Information')
@@ -51,10 +52,11 @@ def lambda_handler(event, context):
     data = table.put_item(
        Item={
             'Id': id,
-            'Early(h)': round_early,
-            'Late(h)': round_late,
+            'Early(min)': round_early,
+            'Late(min)': round_late,
             'Location' : value_saa2,
             'Temperature(C)': value_saa,
+            'Date' : value_time,
         }
     )
     
