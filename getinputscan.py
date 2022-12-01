@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 import boto3
+import uuid
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -46,9 +47,10 @@ def lambda_handler(event, context):
    
     # Rajapinnoista haetut Tampereen juna-aseman aikataulutiedot ja säätiedot lisätään DynamoDB:hen
     table = dynamodb.Table('Information')
+    id = str(uuid.uuid4())
     data = table.put_item(
        Item={
-            'Id': 'Id',
+            'Id': id,
             'Early(h)': round_early,
             'Late(h)': round_late,
             'Location' : value_saa2,
