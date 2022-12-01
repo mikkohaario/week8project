@@ -3,45 +3,36 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   Ryhma2_week8
 
-  
-
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
 
 Resources:
   GetStationFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/
-      Handler: lambda1.lambda_handler
+      Handler: lambdajoona.lambda_handler
       Runtime: python3.9
       Events:
         GetStation:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /koodit
+            Path: /
             Method: get
-      #Policies:
-        #-DynamoDBCrudPolicy
-          #TableName: !Ref ActivitiesTable
   
   UpdateDBFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/
-      Handler: app.lambda_handler
+      Handler: lambda_function.lambda_handler
       Runtime: python3.9
       Events:
-        SaveToDB:
+        ScanDB:
           Type: Api
           Properties:
-            Path: /koodit/
-            Method: put
-      #Policies:
-      #-DynamoDBCrudPolicy
-        #TableName: !Ref ActivitiesTable
+            Path: /koodit
+            Method: get
 
     Layers:
       - !Ref libs
@@ -54,13 +45,4 @@ Resources:
           S3Bucket: my-bucket-region-123456789012
           S3Key: layer.zip
       CompatibleRuntimes:
-        - python3.9      
-
-Outputs:
-  ActivitiesTable:
-    Description: "week8group2db1"
-    Value: !Ref ActivitiesTable
-  ActivitiesTableArn:
-    Description: "week8group2db1 ARN"
-    Value: !GetAtt ActivitiesTable.Arn
-
+        - python3.9
