@@ -19,16 +19,18 @@ for train in data_dict:
                 early.append(difference)
             elif difference > 0: 
                 late.append(difference) 
-print(late)
-print(early)
+# print(late)
+# print(early)
 late_all = sum(late)
 early_all = sum(early)
-print(late_all)
-print(early_all)
+# print(late_all)
+# print(early_all)
 late_hours = late_all / 60
 early_hours = (early_all /60) * -1
+round_late = round(late_hours, ndigits=1)
+round_early = round(early_hours, ndigits=1)
 
-print(f"Today the trains has been {late_hours} hours late alltogether and {early_hours} hours ahead of time")
+print(f"Today the trains has been {round_late} hours late alltogether and {round_early} hours ahead of time")
 
 #print(kokonais)
 
